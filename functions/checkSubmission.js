@@ -10,7 +10,7 @@ exports.handler = async (event,context) => {
         const { name, number } = JSON.parse(event.body);
 
         if (!name || !/^\d{4}$/.test(number)) {
-            return new Response({ statusCode: 400, body: "잘못된 입력값입니다." });
+            return new Response("잘못된 입력값입니다.",{ statusCode: 400});
         }
 
         const filePath = path.join(__dirname, "../data.csv");
@@ -20,14 +20,12 @@ exports.handler = async (event,context) => {
         const foundRow = rows.find(row => row[0] === name && row[1] === number);
         
         if (foundRow) {
-            return new Response({
-                statusCode: 200,
-                body: JSON.stringify({ status: "제출완료", description: foundRow[2] || "설명 없음" }),
-            });
+            return new Response(JSON.stringify({ status: "제출완료", description: foundRow[2] || "설명 없음" }),
+                                {statusCode: 200});
         } else {
-            return new Response({ statusCode: 404, body: JSON.stringify({ status: "정보 없음" }) });
+            return new Response(JSON.stringify({ status: "정보 없음" }), { statusCode: 404});
         }
     } catch (error) {
-        return new Response({ statusCode: 500, body: "서버 오류" });
+        return new Response("서버 오류",{ statusCode: 500});
     }
 };
