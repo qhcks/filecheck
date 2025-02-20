@@ -75,36 +75,37 @@
     </div>
 
     <script>
-        async function checkSubmission() {
-            const name = document.getElementById("name").value.trim();
-            const number = document.getElementById("number").value.trim();
-            const result = document.getElementById("result");
-            
-            if (!name || !number.match(/^\d{4}$/)) {
-                result.textContent = "이름과 전화번호 뒷자리 4자리를 정확히 입력하세요.";
-                result.style.color = "red";
-                return;
-            }
-            
-            try {
-                const response = await fetch("data.csv");
-                const text = await response.text();
-                const rows = text.split("\n").map(row => row.trim().split(","));
-                
-                const foundRow = rows.find(row => row[0] === name && row[1] === number);
-                
-                if (foundRow) {
-                    result.textContent = `제출완료 : ${foundRow[2] || "설명 없음"}`;
-                    result.style.color = "green";
-                } else {
-                    result.textContent = "정보 없음";
-                    result.style.color = "red";
-                }
-            } catch (error) {
-                result.textContent = "데이터를 불러오는 데 실패했습니다.";
-                result.style.color = "red";
-            }
+       async function checkSubmission() {
+        const name = document.getElementById("name").value.trim();
+        const number = document.getElementById("number").value.trim();
+        const result = document.getElementById("result");
+
+        if (!name || !number.match(/^\d{4}$/)) {
+            result.textContent = "이름과 전화번호 뒷자리 4자리를 정확히 입력하세요.";
+            result.style.color = "red";
+            return;
         }
+
+        try {
+            const response = await fetch("/.netlify/functions/checkSubmission", {
+                method: "POST",
+                body: JSON.stringify({ name, number }),
+            });
+
+            const data = await response.json();
+
+            if (response.status === 200) {
+                result.textContent = `제출완료 - 설명: ${data.description}`;
+                result.style.color = "green";
+            } else {
+                result.textContent = "정보 없음";
+                result.style.color = "red";
+            }
+        } catch (error) {
+            result.textContent = "서버 오류 발생";
+            result.style.color = "red";
+        }
+    }
     </script>
 </body>
 </html>
