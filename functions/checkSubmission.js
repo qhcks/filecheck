@@ -1,16 +1,16 @@
 const fs = require("fs");
 const path = require("path");
 
-exports.handler = async (event,context) => {
-    if (event.httpMethod !== "POST") {
-        return new Response("Method Not Allowed",{ statusCode: 405});
+export const handler = async (req,context) => {
+    if (req.httpMethod !== "POST") {
+        return { statusCode: 405, body: "Method Not Allowed" };
     }
 
     try {
         const { name, number } = JSON.parse(event.body);
 
         if (!name || !/^\d{4}$/.test(number)) {
-            return new Response("잘못된 입력값입니다.",{ statusCode: 400});
+            return { statusCode: 400, body: "잘못된 입력값입니다." };
         }
 
         const filePath = path.join(__dirname, "../data.csv");
@@ -20,12 +20,14 @@ exports.handler = async (event,context) => {
         const foundRow = rows.find(row => row[0] === name && row[1] === number);
         
         if (foundRow) {
-            return new Response(JSON.stringify({ status: "제출완료", description: foundRow[2] || "설명 없음" }),
-                                {statusCode: 200});
+            return {
+                statusCode: 200,
+                body: JSON.stringify({ status: "제출완료", description: foundRow[2] || "설명 없음" }),
+            };
         } else {
-            return new Response(JSON.stringify({ status: "정보 없음" }), { statusCode: 404});
+            return { statusCode: 404, body: JSON.stringify({ status: "정보 없음" }) };
         }
     } catch (error) {
-        return new Response("서버 오류",{ statusCode: 500});
+        return { statusCode: 500, body: "서버 오류" };
     }
 };
