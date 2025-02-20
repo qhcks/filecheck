@@ -7,7 +7,7 @@ export const handler = async (req,context) => {
     }
 
     try {
-        const { name, number } = JSON.parse(event.body);
+        const { name, number } = JSON.parse(req.body);
 
         if (!name || !/^\d{4}$/.test(number)) {
             return { statusCode: 400, body: "잘못된 입력값입니다." };
