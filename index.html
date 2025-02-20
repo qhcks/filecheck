@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>밴드실험 지원영상 제출 여부 확인</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .form-group label {
+            width: 150px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        input {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>밴드실험 지원영상<br/>제출 여부 확인</h2>
+        <div class="form-group">
+            <label for="name">이름:</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+            <label for="number">전화번호 뒷 4자리:</label>
+            <input type="text" id="number" maxlength="4" required>
+        </div>
+        <button onclick="checkSubmission()">확인</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        async function checkSubmission() {
+            const name = document.getElementById("name").value.trim();
+            const number = document.getElementById("number").value.trim();
+            const result = document.getElementById("result");
+            
+            if (!name || !number.match(/^\d{4}$/)) {
+                result.textContent = "이름과 전화번호 뒷자리 4자리를 정확히 입력하세요.";
+                result.style.color = "red";
+                return;
+            }
+            
+            try {
+                const response = await fetch("data.csv");
+                const text = await response.text();
+                const rows = text.split("\n").map(row => row.trim().split(","));
+                
+                const foundRow = rows.find(row => row[0] === name && row[1] === number);
+                
+                if (foundRow) {
+                    result.textContent = `제출완료 : ${foundRow[2] || "설명 없음"}`;
+                    result.style.color = "green";
+                } else {
+                    result.textContent = "정보 없음";
+                    result.style.color = "red";
+                }
+            } catch (error) {
+                result.textContent = "데이터를 불러오는 데 실패했습니다.";
+                result.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
