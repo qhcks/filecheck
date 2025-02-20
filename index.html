@@ -57,6 +57,34 @@
             margin-top: 15px;
             font-weight: bold;
         }
+
+        @media (max-width: 480px) {
+  .container {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+    max-width: none;
+    align-items: left;
+  }
+  .form-group {
+    padding-left: 10%;
+    flex-direction: column;
+    align-items: flex-start; /* 라벨 왼쪽 정렬 */
+  }
+  .form-group label {
+    width: auto; /* 라벨 너비를 자동으로 조정 */
+    text-align: left; /* 라벨을 왼쪽 정렬 */
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+  input {
+    width: 90%;
+    box-sizing: border-box;
+  }
+}
+
     </style>
 </head>
 <body>
