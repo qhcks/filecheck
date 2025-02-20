@@ -28,6 +28,6 @@ export const handler = async (req,context) => {
             return { statusCode: 404, body: JSON.stringify({ status: "정보 없음" }) };
         }
     } catch (error) {
-        return { statusCode: 500, body: error };
+        return { statusCode: 500, body: error.JSON };
     }
 };
