@@ -123,7 +123,7 @@
         const data = await response.json();
 
         if (response.status === 200) {
-            result.textContent = `제출완료 - ${data.description}`;
+            result.textContent = data.description;
             result.style.color = "green";
         } else {
             result.textContent = "정보 없음";
