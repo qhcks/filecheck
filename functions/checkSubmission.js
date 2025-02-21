@@ -27,7 +27,8 @@ export const handler = async (req,context) => {
         { name: '유다연', number: '5818', description: '(보컬)영상 1개 제출 완료' },
         { name: '오도영', number: '6855', description: '(기타)영상 1개 제출 완료' },
         { name: '김윤진', number: '5614', description: '(보컬)미제출' },
-        { name: '김동규', number: '4714', description: '(드럼)영상 1개 제출 완료' }
+        { name: '김동규', number: '4714', description: '(드럼)영상 1개 제출 완료' },
+        { name: '이강혁', number: '0000', description: '⚫' }
     ];
 
     // 입력값과 일치하는 항목 검색
