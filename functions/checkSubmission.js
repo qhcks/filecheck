@@ -13,7 +13,7 @@ export const handler = async (req,context) => {
             return { statusCode: 400, body: "잘못된 입력값입니다." };
         }
 
-        const filePath = path.join(__dirname, "data.csv");
+        const filePath = path.join(__dirname, "./data.csv");
         const data = fs.readFileSync(filePath, "utf8").trim();
         const rows = data.split("\n").map(row => row.split(","));
 
@@ -28,6 +28,6 @@ export const handler = async (req,context) => {
             return { statusCode: 404, body: JSON.stringify({ status: "정보 없음" }) };
         }
     } catch (error) {
-        return { statusCode: 500, body: error.message };
+        return { statusCode: 500, body: JSON.stringify({ status: "서버오류", description: error.message }) };
     }
 };

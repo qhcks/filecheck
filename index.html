@@ -130,7 +130,7 @@
             result.style.color = "red";
         }
     } catch (error) {
-        result.textContent = "서버 오류 발생";
+        result.textContent = `서버오류 - ${data.description}`;
         result.style.color = "red";
     }
 }
