@@ -130,7 +130,7 @@
             result.style.color = "red";
         }
     } catch (error) {
-        result.textContent = `서버오류 - ${data.description}`;
+        result.textContent = `서버오류${response.body}`;
         result.style.color = "red";
     }
 }
