@@ -103,38 +103,44 @@
     </div>
 
     <script>
-    async function checkSubmission() {
-    const name = document.getElementById("name").value.trim();
-    const number = document.getElementById("number").value.trim();
-    const result = document.getElementById("result");
-
-    if (!name || !number.match(/^\d{4}$/)) {
-        result.textContent = "이름과 전화번호 뒷자리 4자리를 정확히 입력하세요.";
-        result.style.color = "red";
-        return;
-    }
-
-    try {
-        const response = await fetch("/.netlify/functions/checkSubmission", {
-            method: "POST",
-            body: JSON.stringify({ name, number }),
-        });
-
-        const data = await response.json();
-
-        if (response.status === 200) {
-            result.textContent = `제출완료 - ${data.description}`;
-            result.style.color = "green";
-        } else {
-            result.textContent = "정보 없음";
+        async function checkSubmission() {
+          const name = document.getElementById("name").value.trim();
+          const number = document.getElementById("number").value.trim();
+          const result = document.getElementById("result");
+          const button = document.querySelector("button");
+      
+          if (!name || !number.match(/^\d{4}$/)) {
+            result.textContent = "이름과 전화번호 뒷자리 4자리를 정확히 입력하세요.";
             result.style.color = "red";
+            return;
+          }
+      
+          // 버튼 비활성화 및 처리중 메시지 표시
+          button.disabled = true;
+          result.textContent = "처리중...";
+          result.style.color = "blue";
+      
+          try {
+            const response = await fetch("/.netlify/functions/checkSubmission", {
+              method: "POST",
+              body: JSON.stringify({ name, number }),
+            });
+            const data = await response.json();
+            if (response.status === 200) {
+              result.textContent = data.description;
+              result.style.color = "green";
+            } else {
+              result.textContent = "정보 없음";
+              result.style.color = "red";
+            }
+          } catch (error) {
+            result.textContent = `서버오류: ${error.message}`;
+            result.style.color = "red";
+          }
+          // 처리 완료 후 버튼 재활성화
+          button.disabled = false;
         }
-    } catch (error) {
-        result.textContent = "서버 오류 발생";
-        result.style.color = "red";
-    }
-}
-
     </script>
+      
 </body>
 </html>
