@@ -141,7 +141,7 @@
             if (response.status === 200) {
               // 여러 항목이 있을 경우 descriptions 배열을 사용
               if (data.descriptions && Array.isArray(data.descriptions)) {
-                  result.textContent = data.descriptions.join(" / ");
+                  result.textContent = data.descriptions.join("\n");
               } else if (data.description) {
                   result.textContent = data.description;
               } else {
