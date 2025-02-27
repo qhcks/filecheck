@@ -139,12 +139,19 @@
             });
             const data = await response.json();
             if (response.status === 200) {
-              result.textContent = data.description;
+              // 여러 항목이 있을 경우 descriptions 배열을 사용
+              if (data.descriptions && Array.isArray(data.descriptions)) {
+                  result.textContent = data.descriptions.join(" / ");
+              } else if (data.description) {
+                  result.textContent = data.description;
+              } else {
+                  result.textContent = "제출완료";
+              }
               result.style.color = "green";
-            } else {
+          } else {
               result.textContent = "정보 없음";
               result.style.color = "red";
-            }
+          }
           } catch (error) {
             result.textContent = `서버오류: ${error.message}`;
             result.style.color = "red";

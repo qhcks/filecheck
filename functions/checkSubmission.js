@@ -48,18 +48,21 @@ export const handler = async (req,context) => {
     ];
 
 
-    // 입력값과 일치하는 항목 검색
-    const found = submissions.find(entry => entry.name === name && entry.number === number);
+    // 입력값과 일치하는 항목 검색 (여러 항목 가능)
+    const matches = submissions.filter(entry => entry.name === name && entry.number === number);
 
-    if (found) {
+    if (matches.length > 0) {
         return {
-        statusCode: 200,
-        body: JSON.stringify({ message: "제출완료" , description: found.description })
+            statusCode: 200,
+            body: JSON.stringify({
+                message: "제출완료",
+                descriptions: matches.map(entry => entry.description)
+            })
         };
     } else {
         return {
-        statusCode: 404,
-        body: JSON.stringify({ message: '정보 없음' })
+            statusCode: 404,
+            body: JSON.stringify({ message: "정보 없음" })
         };
     }
     } catch (error) {
