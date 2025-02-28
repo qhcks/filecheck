@@ -29,6 +29,7 @@ export const handler = async (req,context) => {
             { name: '박시은', number: '6065', description: '(보컬)영상 2개 제출 완료' },
             { name: '손서인', number: '1536', description: '(드럼)영상 1개 제출 완료' },
             { name: '송창원', number: '1112', description: '(보컬)미제출' },
+            { name: '신다정', number: '8273', description: '(매니저)미제출' },
             { name: '안서형', number: '8867', description: '(드럼)미제출' },
             { name: '양희웅', number: '0558', description: '(베이스)영상 1개 제출 완료' },
             { name: '오도영', number: '6855', description: '(기타)영상 1개 제출 완료' },
@@ -36,15 +37,19 @@ export const handler = async (req,context) => {
             { name: '원아영', number: '6250', description: '(보컬)영상 2개 제출 완료' },
             { name: '유다연', number: '5818', description: '(보컬)영상 2개 제출 완료' },
             { name: '유주영', number: '3552', description: '(키보드)미제출' },
-            { name: '이명규', number: '8712', description: '(보컬)미제출' },
+            { name: '이도현', number: '9939', description: '(보컬)영상 2개 제출 완료' },
+            { name: '이명규', number: '8712', description: '(보컬)영상 2개 제출 완료' },
             { name: '이정후', number: '0432', description: '(보컬)영상 2개 제출 완료' },
+            { name: '이혜율', number: '6728', description: '(베이스)미제출' },
             { name: '임수연', number: '3807', description: '(보컬)영상 2개 제출 완료' },
             { name: '정가민', number: '6292', description: '(키보드)영상 1개 제출 완료' },
             { name: '정세윤', number: '6537', description: '(보컬)영상 2개 제출 완료' },
             { name: '조민서', number: '2572', description: '(키보드)영상 1개 제출 완료' },
             { name: '조은서', number: '0992', description: '(보컬)영상 2개 제출 완료' },
             { name: '차은호', number: '7627', description: '(기타)영상 1개 제출 완료' },
-            { name: '최민서', number: '1293', description: '(기타)영상 2개 제출 완료' }
+            { name: '최민서', number: '1293', description: '(기타)영상 2개 제출 완료' },
+            { name: '최민서', number: '1293', description: '(드럼)영상 1개 제출 완료' },
+            { name: '홍희선', number: '3710', description: '(드럼)영상 1개 제출 완료' }
 
     ];
 
