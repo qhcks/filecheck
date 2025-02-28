@@ -29,7 +29,7 @@ export const handler = async (req,context) => {
             { name: '박시은', number: '6065', description: '(보컬)영상 2개 제출 완료' },
             { name: '손서인', number: '1536', description: '(드럼)영상 1개 제출 완료' },
             { name: '송창원', number: '1112', description: '(보컬)미제출' },
-            { name: '신다정', number: '8273', description: '(매니저)미제출' },
+            { name: '신다정', number: '8273', description: '(매니저) 파일 제출 완료' },
             { name: '안서형', number: '8867', description: '(드럼)미제출' },
             { name: '양희웅', number: '0558', description: '(베이스)영상 1개 제출 완료' },
             { name: '오도영', number: '6855', description: '(기타)영상 1개 제출 완료' },
