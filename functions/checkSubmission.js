@@ -21,7 +21,7 @@ export const handler = async (req,context) => {
         { name: '김가은', number: '8516', description: '(키보드)미제출' },
         { name: '김동건', number: '8272', description: '(기타)파일 2개 제출 완료' },
         { name: '김동규', number: '4714', description: '(드럼)파일 1개 제출 완료' },
-        { name: '김윤진', number: '5614', description: '(보컬)미제출' },
+        { name: '김윤진', number: '5614', description: '(보컬)파일 2개 제출 완료' },
         { name: '김정연', number: '0635', description: '(보컬)파일 2개 제출 완료' },
         { name: '노주완', number: '2479', description: '(드럼)미제출' },
         { name: '박상운', number: '1473', description: '(키보드)파일 2개 제출 완료' },
@@ -52,7 +52,6 @@ export const handler = async (req,context) => {
         { name: '최민서', number: '1293', description: '(기타)파일 2개 제출 완료' },
         { name: '최민서', number: '1293', description: '(드럼)파일 1개 제출 완료' },
         { name: '홍희선', number: '3710', description: '(드럼)파일 1개 제출 완료' }
-
     ];
 
 
