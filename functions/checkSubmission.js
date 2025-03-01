@@ -9,7 +9,7 @@ export const handler = async (req, context) => {
       }
       
       // CSV 파일과 업데이트 시간 URL (실제 URL로 변경하세요)
-      const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSIVQjWfRo62KOZgwv7OaOpikRj4JF0r1NhZ7ozsP1BDWgsr5B2FeY3qW2yqZlsdDJx-64nyc_V8BK/pub?output=csv";
+      const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSIVQjWfRo62KOZgwv7OaOpikRj4JF0r1NhZ7ozsP1BDWgsr5B2FeY3qW2yqZlsdDJx-64nyc_V8BK/pub?gid=767948703&single=true&output=csv";
       const updateUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSIVQjWfRo62KOZgwv7OaOpikRj4JF0r1NhZ7ozsP1BDWgsr5B2FeY3qW2yqZlsdDJx-64nyc_V8BK/pub?gid=1503598801&single=true&output=csv";
       
       // CSV 파일 fetch
