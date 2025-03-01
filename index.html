@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>밴드실험 지원영상 제출 여부 확인</title>
     <style>
+        /* 기존 스타일 유지 */
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -57,48 +58,38 @@
             margin-top: 15px;
             font-weight: bold;
         }
-
-        .explanation {
-            color: #888; /* 연한 회색 */
-            font-size: 0.9em;
-            margin-top: 20px;
-            text-align: center;
-        }
-
+        /* 모바일 대응 */
         @media (max-width: 480px) {
-          .container {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            box-shadow: none;
-            width: 100%;
-            max-width: none;
-            align-items: left;
-          }
-          .form-group {
-            padding-left: 10%;
-            flex-direction: column;
-            align-items: flex-start; /* 라벨 왼쪽 정렬 */
-          }
-          .form-group label {
-            width: auto; /* 라벨 너비를 자동으로 조정 */
-            text-align: left; /* 라벨을 왼쪽 정렬 */
-            margin-right: 0;
-            margin-bottom: 5px;
-          }
-          input {
-            width: 90%;
-            box-sizing: border-box;
-          }
+            .container {
+                background: none;
+                padding: 0;
+                border-radius: 0;
+                box-shadow: none;
+                width: 100%;
+                max-width: none;
+                align-items: left;
+            }
+            .form-group {
+                padding-left: 10%;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .form-group label {
+                width: auto;
+                text-align: left;
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+            input {
+                width: 90%;
+                box-sizing: border-box;
+            }
         }
-
     </style>
 </head>
 <body>
     <div class="container">
         <h2>밴드실험 지원영상<br/>제출 여부 확인</h2>
-        <p id="updateTimeDisplay" style="font-size: 0.8em; color: #888; margin-top: 10px;"></p>
-
         <div class="form-group">
             <label for="name">이름:</label>
             <input type="text" id="name" required>
@@ -109,66 +100,85 @@
         </div>
         <button onclick="checkSubmission()">확인</button>
         <p id="result"></p>
+        <!-- 업데이트 시간 표시 영역 -->
+        <p id="updateTimeDisplay" style="font-size: 0.8em; color: #888; margin-top: 10px;"></p>
     </div>
-    <div class="explanation">
-      문의 <br/>
-      밴드실험 회장 김보찬 010-2918-1257<br/>
-      밴드실험 인스타그램 @cuk_bandsilhum
-    </div>
+
     <script>
         async function checkSubmission() {
-          const name = document.getElementById("name").value.trim();
-          const number = document.getElementById("number").value.trim();
-          const result = document.getElementById("result");
-          const button = document.querySelector("button");
-          const updateTimeDisplay = document.getElementById("updateTimeDisplay");
+            const name = document.getElementById("name").value.trim();
+            const number = document.getElementById("number").value.trim();
+            const result = document.getElementById("result");
+            const button = document.querySelector("button");
 
-          if (!name || !number.match(/^\d{4}$/)) {
-            result.textContent = "이름과 전화번호 뒷자리 4자리를 정확히 입력하세요.";
-            result.style.color = "red";
-            return;
-          }
-
-          // 버튼 비활성화 및 처리중 메시지 표시
-          button.disabled = true;
-          result.textContent = "처리중...";
-          result.style.color = "blue";
-          updateTimeDisplay.textContent = "";
-
-          try {
-            const response = await fetch("/.netlify/functions/checkSubmission", {
-              method: "POST",
-              body: JSON.stringify({ name, number }),
-            });
-            const data = await response.json();
-
-            if (response.status === 200) {
-              if (data.descriptions && Array.isArray(data.descriptions)) {
-                result.textContent = data.descriptions.join("\n");
-                result.style.whiteSpace = "pre-wrap"; // 줄바꿈 보존
-              } else if (data.description) {
-                result.textContent = data.description;
-              } else {
-                result.textContent = "제출완료";
-              }
-              result.style.color = "green";
-            } else {
-              result.textContent = "정보 없음";
-              result.style.color = "red";
+            if (!name || !number.match(/^\d{4}$/)) {
+                result.textContent = "이름과 전화번호 뒷자리 4자리를 정확히 입력하세요.";
+                result.style.color = "red";
+                return;
             }
-            // 업데이트 시간 정보 표시
-            if (data.updateTime) {
-              updateTimeDisplay.textContent = "최종 업데이트: " + data.updateTime;
+
+            // 버튼 비활성화 및 처리중 메시지 표시
+            button.disabled = true;
+            result.textContent = "처리중...";
+            result.style.color = "blue";
+
+            try {
+                const response = await fetch("/.netlify/functions/checkSubmission", {
+                    method: "POST",
+                    body: JSON.stringify({ name, number }),
+                });
+                const data = await response.json();
+
+                if (response.status === 200) {
+                    if (data.descriptions && Array.isArray(data.descriptions)) {
+                        result.textContent = data.descriptions.join("\n");
+                        result.style.whiteSpace = "pre-wrap";
+                    } else if (data.description) {
+                        result.textContent = data.description;
+                    } else {
+                        result.textContent = "제출완료";
+                    }
+                    result.style.color = "green";
+                } else {
+                    result.textContent = "정보 없음";
+                    result.style.color = "red";
+                }
+            } catch (error) {
+                result.textContent = `서버오류: ${error.message}`;
+                result.style.color = "red";
             }
-          } catch (error) {
-            result.textContent = `서버오류: ${error.message}`;
-            result.style.color = "red";
-          }
-          // 처리 완료 후 버튼 재활성화
-          button.disabled = false;
+            button.disabled = false;
         }
 
+        // 첫번째 input에서 Enter 누르면 두번째 input으로 포커스 이동
+        document.getElementById("name").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("number").focus();
+            }
+        });
+
+        // 두번째 input에서 Enter 누르면 확인 버튼 클릭
+        document.getElementById("number").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.querySelector("button").click();
+            }
+        });
+
+        // 페이지 로딩 시 업데이트 시간 가져오기
+        window.addEventListener("DOMContentLoaded", async function() {
+            try {
+                const response = await fetch("/.netlify/functions/getUpdateTime");
+                const data = await response.json();
+                const updateTimeDisplay = document.getElementById("updateTimeDisplay");
+                if (updateTimeDisplay && data.updateTime) {
+                    updateTimeDisplay.textContent = "최종 업데이트: " + data.updateTime;
+                }
+            } catch (error) {
+                console.error("업데이트 시간 가져오기 실패", error);
+            }
+        });
     </script>
-      
 </body>
 </html>
